@@ -1,0 +1,17 @@
+# Archivos de entorno virtual de Python
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+
+# Archivos de configuración local y claves
+.env
+.streamlit/secrets.toml
+
+# Base de datos local (se regenera dinámicamente con extractor.py)
+*.duckdb
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
