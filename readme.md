@@ -52,3 +52,18 @@ El proyecto sigue una arquitectura modular y descompuesta en responsabilidades c
                ┌────────────────────────┐
                │  Telegram Alert Bot    │ (Push Notification System)
                └────────────────────────┘
+
+
+⚙️ Componentes del Sistemaapp.py: Interfaz interactiva desarrollada en Streamlit. Incluye selectores regionales dinámicos, filtros de fecha personalizados, indicadores KPIs y visualización por estaciones del año (Hemisferio Sur).forecast.py: Integración con la API meteorológica de Open-Meteo (modelos ECMWF/GFS) para proyectar condiciones climáticas reales a 7 días sin alucinaciones.ml_risk.py: Modelo de clasificación con RandomForestClassifier de Scikit-Learn que evalúa el nivel de riesgo operativo (Bajo, Moderado, Crítico) según la interacción de variables climáticas.alerts.py: Bot automatizado de Telegram que emite notificaciones preventivas inmediatas al teléfono del usuario si el modelo detecta días con $T_{min} \le 0^\circ\text{C}$.agrotech_chile.duckdb: Motor de base de datos analítica empotrada (OLAP) para consultas de alta velocidad.🧠 Criterio Técnico & Calidad de Datos (Data Quality)1. Tratamiento de Códigos Nulos (-999)Las APIs satelitales como NASA POWER retornan la constante -999 para representar días cuyo procesamiento aún no concluye.Solución aplicada: El pipeline ETL detecta automáticamente estos valores extremados ($\le -900$), los transforma en NaN e imputa o descarta registros incompletos, evitando distorsiones en totales acumulados de precipitación y escala térmica.2. Decisiones de Ingeniería y Ética de Machine LearningEn lugar de entrenar modelos ingenuos de Time-Series para intentar predecir el clima desde cero (lo cual es impreciso y riesgoso para uso operacional real), el sistema reutiliza los pronósticos de súper-computadoras globales (Open-Meteo) y aplica el Machine Learning para resolver el problema de negocio: estimar el impacto y la probabilidad de daño operacional en el cultivo.🚀 Instalación y Ejecución LocalRequisitos PreviosPython 3.10 o superior.Git instalado.PasosClonar el repositorio:Bashgit clone [https://github.com/TU_USUARIO/agrosentinel-chile.git](https://github.com/TU_USUARIO/agrosentinel-chile.git)
+cd agrosentinel-chile
+Crear y activar un entorno virtual:Bash# Windows
+python -m venv venv
+.\venv\Scripts\activate
+
+# Linux/macOS
+python3 -m venv venv
+source venv/bin/activate
+Instalar dependencias:Bashpip install -r requirements.txt
+Ejecutar la aplicación en Streamlit:Bashpython -m streamlit run app.py
+📦 Stack TecnológicoLenguaje: Python 3.10+Almacenamiento Analítico: DuckDBManipulación de Datos: Pandas, NumPyVisualización: Streamlit, Plotly ExpressMachine Learning: Scikit-Learn (Random Forest)APIs Integradas: NASA POWER API, Open-Meteo API, Telegram Bot API✉️ Contacto & RedesDesarrollado como proyecto de ingeniería de datos aplicado al sector agrícola en Chile.LinkedIn: Tu NombreGitHub: @TuUsuario
+---
